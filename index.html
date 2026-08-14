@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HMPRO + EGCO — คู่มือไล่ราคาก่อน XD</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #171d24;
+      --panel-2: #1d252e;
+      --line: #2a3440;
+      --text: #e8eef4;
+      --muted: #93a0ae;
+      --soft: #c5d0db;
+      --accent: #3dd6c6;
+      --accent-2: #7aa8ff;
+      --warn: #f0b429;
+      --danger: #ff6b6b;
+      --good: #5bd38a;
+      --hmpro: #5bd38a;
+      --egco: #7aa8ff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Sarabun", "IBM Plex Sans Thai", "Noto Sans Thai", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(1200px 500px at 10% -10%, rgba(61, 214, 198, 0.08), transparent 50%),
+        radial-gradient(900px 400px at 100% 0%, rgba(122, 168, 255, 0.08), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a { color: var(--accent); }
+    a:hover { color: #7fe7dc; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 18px 80px; }
+
+    header.hero {
+      display: grid;
+      gap: 14px;
+      padding: 28px 24px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 { margin: 0; font-size: 32px; line-height: 1.25; }
+    h2 { margin: 0 0 12px; font-size: 24px; }
+    h3 { margin: 0 0 8px; font-size: 18px; }
+    p { margin: 0 0 12px; color: var(--soft); }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    nav.toc a {
+      text-decoration: none;
+      color: var(--text);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+    section {
+      margin-top: 28px;
+      padding: 22px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .card.hmpro { border-top: 3px solid var(--hmpro); }
+    .card.egco { border-top: 3px solid var(--egco); }
+
+    .card h3 { display: flex; align-items: center; justify-content: space-between; }
+    .tag {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #24303b;
+      color: var(--muted);
+    }
+
+    ol, ul { margin: 8px 0 0; padding-left: 20px; color: var(--soft); }
+    li + li { margin-top: 6px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { color: var(--muted); font-weight: 600; background: #141b22; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tr.best td { background: rgba(91, 211, 138, 0.08); }
+    tr.skip td { color: #8b969f; }
+
+    .good { color: var(--good); font-weight: 700; }
+    .bad { color: var(--danger); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+
+    .box {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #141b22;
+      border: 1px solid var(--line);
+      color: var(--soft);
+    }
+
+    .box.warn {
+      border-color: rgba(240, 180, 41, 0.4);
+      background: rgba(240, 180, 41, 0.08);
+    }
+
+    .box.danger {
+      border-color: rgba(255, 107, 107, 0.35);
+      background: rgba(255, 107, 107, 0.08);
+    }
+
+    .links a {
+      display: block;
+      text-decoration: none;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--line);
+      color: var(--accent-2);
+    }
+
+    .links a:last-child { border-bottom: 0; }
+    .links small { display: block; color: var(--muted); font-size: 12px; }
+
+    code, .copy {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      background: #10161c;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: block;
+      white-space: pre-wrap;
+      color: #d7e6ff;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-top: 8px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #06221f;
+      font-weight: 700;
+      padding: 8px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    button:hover { filter: brightness(1.05); }
+
+    .steps { counter-reset: step; }
+    .steps li { list-style: none; position: relative; padding-left: 8px; }
+    .steps { padding-left: 0; }
+    .steps li {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px 12px 52px;
+      margin: 0 0 10px;
+    }
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #12352f;
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      table { font-size: 13px; }
+      .wrap { padding: 14px 12px 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">คู่มือส่วนตัว · ไม่ใช่คำแนะนำซื้อขาย</div>
+      <h1>HMPRO + EGCO<br />ไล่ราคาก่อนขึ้น XD</h1>
+      <p>
+        รวมแหล่งข่าวทางการ วิธีอ่านมติบอร์ด เกณฑ์เข้า-ออก และบทเรียนปี 2568 ไว้ที่เดียว
+        กลยุทธ์นี้คือ <b>ซื้อหลังประกาศปันผล แล้วขายวันทำการสุดท้ายก่อน XD</b>
+        ไม่ได้เก็บเงินปันผล
+      </p>
+      <div class="meta">
+        <span class="chip">อัปเดต 14 ส.ค. 2569</span>
+        <span class="chip">ตัวหลัก: HMPRO</span>
+        <span class="chip">ตัวสำรอง: EGCO</span>
+        <span class="chip">ขายวันก่อน XD</span>
+        <span class="chip">GitHub Pages ฟรี</span>
+      </div>
+      <nav class="toc">
+        <a href="#howto">วิธีใช้หน้านี้</a>
+        <a href="#plan">แผนเข้า-ออก</a>
+        <a href="#sources">แหล่งข่าวทางการ</a>
+        <a href="#read">อ่านข่าว SET</a>
+        <a href="#alerts">ตั้งแจ้งเตือน</a>
+        <a href="#data">ข้อมูลปีที่แล้ว</a>
+        <a href="#watch">สิ่งที่ต้องเฝ้าตอนนี้</a>
+      </nav>
+    </header>
+
+    <section id="howto">
+      <h2>วิธีใช้หน้านี้ใน 2 นาที</h2>
+      <ol class="steps">
+        <li>
+          <b>ตอนนี้ยังไม่ต้องซื้อ</b>
+          เปิดหน้าข่าว SET ของ HMPRO และ EGCO ทุกวันหลังตลาดปิด ประมาณ 17:00–20:00
+        </li>
+        <li>
+          <b>รอข่าวหัวข้อ “การจ่ายปันผล” หรือ “มติคณะกรรมการ”</b>
+          อ่านแค่ 4 ช่อง: จำนวนเงินต่อหุ้น, วัน XD, วัน Record, วันจ่าย
+        </li>
+        <li>
+          <b>เข้าได้เมื่อตัวเลขไม่ต่ำกว่าเกณฑ์</b>
+          HMPRO ใกล้ 0.16 บาทขึ้นไป · EGCO ยังได้ 3.25 บาท
+        </li>
+        <li>
+          <b>ขายวันทำการสุดท้ายก่อนวัน XD</b>
+          อย่าถือข้ามวัน XD เพราะกลยุทธ์นี้ไม่ได้ต้องการเงินปันผล
+        </li>
+      </ol>
+    </section>
+
+    <section id="plan">
+      <h2>แผนเข้า-ออก</h2>
+      <div class="grid-2">
+        <div class="card hmpro">
+          <h3>HMPRO <span class="tag">ตัวลุ้นกำไรสูงสุด</span></h3>
+          <p>ปีที่แล้ววิ่งจาก 7.05 → 7.85 บาท ระหว่าง 14 ส.ค. ถึงวันก่อน XD คิดเป็น <span class="good">+11.3%</span></p>
+          <ul>
+            <li>เข้าหลังประกาศ DPS ไม่ต่ำกว่า 0.16 บาท</li>
+            <li>ถ้าวอลุ่มไม่มาหลังประกาศ อย่าฝืนถือ</li>
+            <li>ขายวันทำการก่อน XD</li>
+          </ul>
+        </div>
+        <div class="card egco">
+          <h3>EGCO <span class="tag">ตัวที่สม่ำกว่า</span></h3>
+          <p>ปีที่แล้ววิ่งจาก 113 → 117 บาท ในช่วงเดียวกัน คิดเป็น <span class="good">+3.5%</span> ยีลด์รอบนั้นสูงกว่าแบงก์ใหญ่ชัด</p>
+          <ul>
+            <li>เข้าหลังประกาศ DPS ยังเป็น 3.25 บาท</li>
+            <li>ถ้าตัดปันผลลง ยกเลิกไม้สั้นนี้</li>
+            <li>ขายวันทำการก่อน XD</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box warn" style="margin-top:14px">
+        <b>อย่าซื้อแบงก์ใหญ่ด้วยกลยุทธ์นี้</b>
+        ปีที่แล้ว BBL และ SCB ซื้อช่วงนี้แล้วยังติดลบก่อน XD เพราะปันผลรอบกันยายนบางเกินไป คนไม่ไล่ราคา
+      </div>
+    </section>
+
+    <section id="sources">
+      <h2>แหล่งข่าวทางการ เปิดอันนี้ก่อน</h2>
+      <div class="grid-2">
+        <div class="card hmpro">
+          <h3>HMPRO</h3>
+          <div class="links">
+            <a href="https://www.set.or.th/th/market/product/stock/quote/HMPRO/news" target="_blank" rel="noopener">
+              ข่าว SET ของ HMPRO
+              <small>ต้นทางมติบอร์ดและข่าวปันผล</small>
+            </a>
+            <a href="https://www.set.or.th/th/market/product/stock/quote/HMPRO/rights-benefits" target="_blank" rel="noopener">
+              สิทธิประโยชน์ / วัน XD
+              <small>ดูวัน XD และวันจ่ายหลังข่าวออก</small>
+            </a>
+            <a href="https://hmpro-th.listedcompany.com/newsroom_set.html" target="_blank" rel="noopener">
+              ข่าวแจ้งตลาดจากเว็บบริษัท
+              <small>สำเนาข่าว SET ฝั่ง IR</small>
+            </a>
+            <a href="https://hmpro-th.listedcompany.com/dividend.html" target="_blank" rel="noopener">
+              นโยบายปันผล HMPRO
+              <small>จ่ายไม่น้อยกว่า 40% ของกำไรสุทธิ</small>
+            </a>
+            <a href="mailto:ir@homepro.co.th">ir@homepro.co.th</a>
+          </div>
+        </div>
+        <div class="card egco">
+          <h3>EGCO</h3>
+          <div class="links">
+            <a href="https://www.set.or.th/th/market/product/stock/quote/EGCO/news" target="_blank" rel="noopener">
+              ข่าว SET ของ EGCO
+              <small>ต้นทางมติบอร์ดและข่าวปันผล</small>
+            </a>
+            <a href="https://www.set.or.th/th/market/product/stock/quote/EGCO/rights-benefits" target="_blank" rel="noopener">
+              สิทธิประโยชน์ / วัน XD
+              <small>ดูวัน XD และวันจ่ายหลังข่าวออก</small>
+            </a>
+            <a href="https://www.egco.com/th/investor-relations/calendar" target="_blank" rel="noopener">
+              ปฏิทินนักลงทุนสัมพันธ์
+              <small>วันประกาศงบ / พบนักวิเคราะห์</small>
+            </a>
+            <a href="https://www.egco.com/th/investor-relations/information-inquiry/news-subscription" target="_blank" rel="noopener">
+              สมัครอีเมลข่าว EGCO
+              <small>เลือก Disclosure + Financial Statement</small>
+            </a>
+            <a href="https://www.egco.com/th/investor-relations/home" target="_blank" rel="noopener">
+              หน้า IR หลักของ EGCO
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>ปฏิทินรวมตลาด</h3>
+        <div class="links">
+          <a href="https://www.set.or.th/th/market/stock-calendar/x-calendar" target="_blank" rel="noopener">ปฏิทินหลักทรัพย์ SET</a>
+          <a href="https://www.infoquest.co.th/stock-calendar" target="_blank" rel="noopener">ปฏิทินหุ้น InfoQuest</a>
+          <a href="https://www.settrade.com/th/equities/stock-calendar" target="_blank" rel="noopener">ปฏิทิน SETTRADE</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="read">
+      <h2>อ่านข่าว SET ยังไงให้ถูกและเร็ว</h2>
+      <p>เปิดข่าวที่หัวข้อมีคำว่า <b>การจ่ายปันผล</b> หรือ <b>มติคณะกรรมการ</b> แล้วมองหา 4 ช่องนี้เท่านั้น</p>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>ช่องในข่าว</th>
+              <th>ดูอะไร</th>
+              <th>ใช้ทำอะไร</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>อัตราการจ่ายปันผล (บาท/หุ้น)</td>
+              <td>ก้อนเงินรอบนี้</td>
+              <td>เทียบเกณฑ์เข้า 0.16 / 3.25</td>
+            </tr>
+            <tr>
+              <td>วันที่ไม่ได้รับสิทธิปันผล (XD)</td>
+              <td>วันแรกที่ซื้อแล้วไม่ได้ปันผล</td>
+              <td>ขายวันทำการก่อนหน้านี้</td>
+            </tr>
+            <tr>
+              <td>วันกำหนดรายชื่อผู้ถือหุ้น</td>
+              <td>มักเป็นวันถัดจาก XD</td>
+              <td>ตรวจว่าข่าวไม่สลับวันที่</td>
+            </tr>
+            <tr>
+              <td>วันที่จ่ายปันผล</td>
+              <td>วันที่เงินเข้าบัญชี</td>
+              <td>ไม่ใช้กับกลยุทธ์นี้</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box" style="margin-top:14px">
+        <b>ลำดับความน่าเชื่อถือ</b>
+        1) ข่าว SET และหน้าสิทธิประโยชน์ &nbsp; 2) เว็บ IR บริษัท &nbsp; 3) ปฏิทิน InfoQuest / SETTRADE &nbsp; 4) สำนักข่าวที่อ้าง SET &nbsp; 5) เพจสรุปหุ้น ใช้ดูบรรยากาศอย่างเดียว
+      </div>
+    </section>
+
+    <section id="alerts">
+      <h2>ตั้งแจ้งเตือนวันนี้</h2>
+      <div class="grid-2">
+        <div>
+          <h3>ในแอปโบรก / SETTRADE</h3>
+          <ol>
+            <li>ใส่ HMPRO และ EGCO ในวอทช์ลิสต์</li>
+            <li>เปิดแจ้งเตือนข่าวบริษัท</li>
+            <li>เปิดแจ้งเตือนราคาถ้าต้องการ แต่ข่าวสำคัญกว่า</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Google Alert คัดลอกอันนี้</h3>
+          <div class="row">
+            <code id="alert1">"HMPRO" ("จ่ายปันผล" OR "ขึ้นเครื่องหมาย XD" OR "มติคณะกรรมการ")</code>
+            <button type="button" onclick="copyText('alert1')">คัดลอก</button>
+          </div>
+          <div class="row">
+            <code id="alert2">"EGCO" ("จ่ายปันผล" OR "ขึ้นเครื่องหมาย XD" OR "มติคณะกรรมการ")</code>
+            <button type="button" onclick="copyText('alert2')">คัดลอก</button>
+          </div>
+          <p style="margin-top:10px">ไปวางที่ <a href="https://www.google.com/alerts" target="_blank" rel="noopener">google.com/alerts</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="data">
+      <h2>บทเรียนปี 2568 ที่ใช้ตัดสินใจ</h2>
+      <p>ถ้าซื้อวันที่ 14 ส.ค. 2568 แล้วขายวันก่อน XD ผลจริงเป็นแบบนี้ ราคาปิดจาก Yahoo Finance</p>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>หุ้น</th>
+              <th>วัน XD</th>
+              <th class="num">ปันผล</th>
+              <th class="num">ปิด 14 ส.ค.</th>
+              <th class="num">ปิดวันก่อน XD</th>
+              <th class="num">ผลตอบแทน</th>
+              <th class="num">ยีลด์รอบนั้น</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="best">
+              <td>HMPRO</td><td>10 ก.ย. 68</td><td class="num">0.16</td><td class="num">7.05</td><td class="num">7.85</td><td class="num good">+11.3%</td><td class="num">2.04%</td>
+            </tr>
+            <tr>
+              <td>KKP</td><td>10 ก.ย. 68</td><td class="num">1.50</td><td class="num">57.75</td><td class="num">60.25</td><td class="num">+4.3%</td><td class="num">2.49%</td>
+            </tr>
+            <tr>
+              <td>RATCH</td><td>2 ก.ย. 68</td><td class="num">0.80</td><td class="num">26.25</td><td class="num">27.25</td><td class="num">+3.8%</td><td class="num">2.94%</td>
+            </tr>
+            <tr class="best">
+              <td>EGCO</td><td>5 ก.ย. 68</td><td class="num">3.25</td><td class="num">113.00</td><td class="num">117.00</td><td class="num">+3.5%</td><td class="num">2.78%</td>
+            </tr>
+            <tr>
+              <td>TISCO</td><td>10 ก.ย. 68</td><td class="num">2.00</td><td class="num">101.00</td><td class="num">102.50</td><td class="num">+1.5%</td><td class="num">1.95%</td>
+            </tr>
+            <tr>
+              <td>KBANK</td><td>10 ก.ย. 68</td><td class="num">2.00</td><td class="num">169.00</td><td class="num">171.00</td><td class="num">+1.2%</td><td class="num">1.17%</td>
+            </tr>
+            <tr class="skip">
+              <td>BBL</td><td>10 ก.ย. 68</td><td class="num">2.00</td><td class="num">153.50</td><td class="num">152.50</td><td class="num bad">−0.7%</td><td class="num">1.31%</td>
+            </tr>
+            <tr class="skip">
+              <td>SCB</td><td>2 ก.ย. 68</td><td class="num">2.00</td><td class="num">130.00</td><td class="num">129.00</td><td class="num bad">−0.8%</td><td class="num">1.55%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px">
+        HMPRO ปีที่แล้วมีวอลุ่มพุ่งวันที่ 26 ส.ค. กว่า 500 ล้านหุ้น ลักษณะคนไล่ปันผลชัด
+        KKP ปีที่แล้วกระโดดวันที่ 28 ส.ค. หลังงบ ไม่ได้ค่อย ๆ ไต่จากกลางเดือน
+      </p>
+    </section>
+
+    <section id="watch">
+      <h2>สิ่งที่ต้องเฝ้าตอนนี้</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>EGCO · ด่วน</h3>
+          <p>ปฏิทินบริษัทระบุวันประกาศงบ Q2/2569 แบบ Tentative คือ <b>14 ส.ค. 2569</b> บางรอบบอร์ดเคาะปันผลวันเดียวกับงบ บางรอบตามหลัง 1–2 สัปดาห์</p>
+        </div>
+        <div class="card">
+          <h3>HMPRO · สิ้นเดือนนี้</h3>
+          <p>ปีที่แล้วเคาะปันผลประมาณ 26 ส.ค. แล้วขึ้น XD 10 ก.ย. งบ Q2/69 ออกแล้วเมื่อ 27 ก.ค. กำไรโต รอแค่ข่าวปันผล</p>
+        </div>
+      </div>
+      <div class="box danger" style="margin-top:14px">
+        <b>จุดที่แผนพังได้</b>
+        ตลาดย่อแรงระหว่างรอ XD · บริษัทตัดปันผล · วอลุ่มไม่มาหลังประกาศ · ปีที่แล้ว HMPRO วิ่งแรงเป็นตัวอย่างเดียวที่ชัด ยังไม่ใช่สูตรสำเร็จทุกปี
+      </div>
+    </section>
+
+    <footer>
+      หน้านี้รวบรวมจากข่าว SET, เว็บ IR ของบริษัท, ปฏิทิน InfoQuest และราคาปิด Yahoo Finance ปี 2568
+      ใช้ประกอบการตัดสินใจส่วนตัว ไม่ใช่คำแนะนำการลงทุน
+    </footer>
+  </div>
+
+  <script>
+    async function copyText(id) {
+      const text = document.getElementById(id).innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        const btn = event.currentTarget;
+        const old = btn.textContent;
+        btn.textContent = "คัดลอกแล้ว";
+        setTimeout(() => { btn.textContent = old; }, 1200);
+      } catch (err) {
+        alert(text);
+      }
+    }
+  </script>
+</body>
+</html>
